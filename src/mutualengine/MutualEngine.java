@@ -22,7 +22,7 @@ package mutualengine;
  */
 public class MutualEngine
 {
-	public static Game game;
+	public static Game game = new Game();
 	
 	public static void logLine(String what)
 	{
