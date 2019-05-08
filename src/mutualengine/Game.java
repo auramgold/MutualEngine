@@ -16,7 +16,9 @@
  */
 package mutualengine;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import mutualengine.commands.actions.CommandRunner;
 import mutualengine.implementations.ImplPlayer;
 import mutualengine.implementations.ImplWindow;
@@ -37,6 +39,7 @@ public class Game
 	private Window displayWindow;
 	private World currentWorld;
 	private CommandRunner commandRunner;
+	private Set<String> flags = new HashSet<>();
 	
 	/* Initialization methods */
 	
@@ -127,6 +130,21 @@ public class Game
 	void addToLog(String string)
 	{
 		displayWindow.addToLog(string);
+	}
+	
+	public boolean getFlag(String flagName)
+	{
+		return flags.contains(flagName);
+	}
+	
+	public void setFlag(String flagName)
+	{
+		flags.add(flagName);
+	}
+	
+	public void unsetFlag(String flagName)
+	{
+		flags.remove(flagName);
 	}
 	
 }
