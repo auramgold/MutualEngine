@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import mutualengine.interfaces.Player;
-import mutualengine.enumerations.RawAction;
 import mutualengine.implementations.AbstractItem;
 import mutualengine.interfaces.Damageable;
 import mutualengine.interfaces.Item;
@@ -74,7 +73,7 @@ public class TestPebble extends AbstractItem
 	}
 
 	@Override
-	public boolean interactWith(Player ply, Item itm, RawAction act)
+	public boolean interactWith(Player ply, Item itm)
 	{
 		if(itm instanceof Damageable)
 		{

@@ -16,8 +16,6 @@
  */
 package mutualengine.interfaces;
 
-import mutualengine.enumerations.RawAction;
-
 /**
  *
  * @author auramgold
@@ -36,7 +34,7 @@ public interface Item
 	
 	public String getLongDescription();
 	
-	public boolean interactWith(Player ply, Item itm, RawAction act);
+	public boolean interactWith(Player ply, Item itm);
 	
 	public ItemContainer getLocation();
 	

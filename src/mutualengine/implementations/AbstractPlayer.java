@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import mutualengine.MutualEngine;
-import mutualengine.enumerations.RawAction;
 import mutualengine.interfaces.Area;
 import mutualengine.interfaces.Item;
 import mutualengine.interfaces.ItemContainer;
@@ -92,7 +91,7 @@ public abstract class AbstractPlayer extends ItemContainerItem implements Player
 	}
 	
 	@Override
-	public boolean interactWith(Player ply, Item itm, RawAction act)
+	public boolean interactWith(Player ply, Item itm)
 	{
 		MutualEngine.logLine("You can't use yourself on something!");
 		return false;

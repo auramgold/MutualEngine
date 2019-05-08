@@ -11,7 +11,6 @@ import mutualengine.interfaces.Player;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
 import mutualengine.commands.ArgumentType;
-import mutualengine.enumerations.RawAction;
 import mutualengine.interfaces.Item;
 
 /**
@@ -51,7 +50,7 @@ public class Throw extends AbstractCommand
 		else
 		{
 			MutualEngine.logLine("Throwing " + usage.getName() + " at " + target.getName());
-			boolean ret = usage.interactWith(player, target, RawAction.USE);
+			boolean ret = usage.interactWith(player, target);
 			if(ret)
 			{
 				usage.getLocation().moveItemTo(usage, player.getLocation());

@@ -10,7 +10,6 @@ import mutualengine.MutualEngine;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
 import mutualengine.commands.ArgumentType;
-import mutualengine.enumerations.RawAction;
 import mutualengine.interfaces.Item;
 import mutualengine.interfaces.Player;
 
@@ -46,7 +45,7 @@ public class Use extends AbstractCommand
 		else
 		{
 			MutualEngine.logLine("Using " + usage.getName() + " on " + target.getName());
-			return usage.interactWith(player, target, RawAction.USE);
+			return usage.interactWith(player, target);
 		}
 	}
 }
