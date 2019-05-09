@@ -36,7 +36,8 @@ public enum ArgumentType
 {
 	DIRECTION	(0,
 		(Player plr, String str) ->
-			Direction.getFromString(str)
+			Direction.getFromString(str),
+		MultipleWordBehavior.ONEWORD
 		),
 	PREPOSITION	(1,
 		(Player plr, String str) ->
@@ -48,8 +49,9 @@ public enum ArgumentType
 			);
 			check = preps.contains(str);
 			return check?str:null;
-		}),
-	ITEM		(2,
+		}, 
+		MultipleWordBehavior.ONEWORD),
+	ITEM	(2,
 		(Player plr, String str) ->
 		{
 			for(Item listItem : plr.getAccessibleItems())
@@ -60,10 +62,26 @@ public enum ArgumentType
 				}
 			}
 			return null;
-		});
+		},
+		MultipleWordBehavior.MULTIWORD),
+	
+	TEXT	(98,
+		(Player plr, String str) ->
+		{
+			return str;
+		},
+		MultipleWordBehavior.ONEWORD),
+	
+	GREEDYTEXT	(99,
+		(Player plr, String str) ->
+		{
+			return str;
+		},
+		MultipleWordBehavior.GREEDY);
 	
 	private final int id;
 	private final ValidCheck valid;
+	private final MultipleWordBehavior behavior;
 	
 	public int toInt()
 	{
@@ -75,14 +93,20 @@ public enum ArgumentType
 		return valid.parseValid(plr, str);
 	}
 	
+	public MultipleWordBehavior getMultiBehavior()
+	{
+		return behavior;
+	}
+	
 	public String asString()
 	{
 		return this.toString().toLowerCase();
 	}
 	
-	private ArgumentType(int idNum, ValidCheck vl)
+	private ArgumentType(int idNum, ValidCheck vl, MultipleWordBehavior mwb)
 	{
 		id = idNum;
 		valid = vl;
+		behavior = mwb;
 	}
 }

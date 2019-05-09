@@ -20,14 +20,16 @@ package mutualengine.commands;
  *
  * @author auramgold
  */
-public class ArgumentData
+public enum MultipleWordBehavior
 {
-	public Object[] objects;
-	public final boolean errored;
+	ONEWORD		(0),
+	MULTIWORD	(1),
+	GREEDY		(2);
 	
-	public ArgumentData(boolean error, Object... objs)
+	private final int id;
+	
+	private MultipleWordBehavior(int idNum)
 	{
-		errored = error;
-		objects = objs;
+		id = idNum;
 	}
 }

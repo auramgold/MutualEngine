@@ -22,6 +22,7 @@ import mutualengine.MutualEngine;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
 import mutualengine.commands.ArgumentType;
+import mutualengine.commands.MultipleWordBehavior;
 import mutualengine.interfaces.Command;
 import mutualengine.interfaces.Player;
 
@@ -45,6 +46,7 @@ public class CommandRunner
 			commands.add(new Use("use"));
 			commands.add(new Throw("throw","toss"));
 			commands.add(new Inventory("inventory"));
+			commands.add(new Echo("echo", "say"));
 		}
 	}
 	
@@ -84,16 +86,38 @@ public class CommandRunner
 		int parseIndex = 0;
 		int argsIndex = 0;
 		int parseMax = format.numArgs;
+		int requiredMax = format.numRequiredArgs;
 		int argsMax = args.size();
 		String part = "";
 		Object[] ret = new Object[parseMax];
 		while(argsIndex < argsMax && parseIndex < parseMax)
 		{
+			// append the next part onto the processing string if we're working
+			//		with a multi-word
 			if(!part.equals("")) part += " ";
 			part += args.get(argsIndex);
+			
+			// if the argument is a greedy consumer, give it the rest of the
+			//		arguments and break the loop
+			if(format.getTypeAt(argsIndex).getMultiBehavior() == MultipleWordBehavior.GREEDY)
+			{
+				++argsIndex;
+				while(argsIndex < argsMax)
+				{
+					part += " ";
+					part += args.get(argsIndex);
+					++argsIndex;
+				}
+				
+				ret[parseIndex] = part;
+				break;
+			}
+			
+			
 			Object parseVal = format.parseValid(parseIndex, plr, part);
 			System.out.println("Current part: "+part);
 			System.out.println(argsIndex+":"+parseIndex);
+			
 			if(parseVal != null)
 			{
 				System.out.println("Correct!");
@@ -101,7 +125,7 @@ public class CommandRunner
 				part = "";
 				++parseIndex;
 			}
-			else if(format.getTypeAt(parseIndex) != ArgumentType.ITEM)
+			else if(format.getTypeAt(parseIndex).getMultiBehavior() == MultipleWordBehavior.ONEWORD)
 			{
 				System.out.println("No valid argument");
 				MutualEngine.logErrorLine("Expected " + format.getTypeAt(parseIndex).asString() + " but found none.");
@@ -110,10 +134,11 @@ public class CommandRunner
 			
 			++argsIndex;
 		}
-		boolean continueBool = parseIndex != parseMax && format.getTypeAt(0) != null;
+		
+		boolean continueBool = parseIndex < requiredMax && format.getTypeAt(0) != null;
 		if(continueBool)
 		{
-			MutualEngine.logErrorLine("Something (likely an item) is missing in the command.");
+			MutualEngine.logErrorLine("A " + format.getTypeAt(parseIndex).asString() + " is missing in the command.");
 		}
 		return new ArgumentData(continueBool, ret);
 	}

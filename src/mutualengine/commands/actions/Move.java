@@ -8,6 +8,7 @@ package mutualengine.commands.actions;
 import java.util.List;
 import mutualengine.MutualEngine;
 import mutualengine.interfaces.Player;
+import mutualengine.commands.ArgumentWrapper;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
 import mutualengine.commands.ArgumentType;
@@ -21,7 +22,8 @@ import mutualengine.interfaces.Link;
  */
 public class Move extends AbstractCommand
 {
-	public static final ArgumentFormat format = new ArgumentFormat(ArgumentType.DIRECTION);
+	public static final ArgumentFormat format = new ArgumentFormat(
+			new ArgumentWrapper(ArgumentType.DIRECTION, false));
 
 	public Move(String... aliasList)
 	{
@@ -52,7 +54,7 @@ public class Move extends AbstractCommand
 		else
 		{
 			player.moveToArea(link.getConnection());
-			MutualEngine.logLine("\r\n" + link.getConnection().getDescription());
+			MutualEngine.logLine("" + link.getConnection().getDescription());
 		}
 		return true;
 	}

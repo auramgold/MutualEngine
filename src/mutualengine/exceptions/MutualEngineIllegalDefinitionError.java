@@ -14,20 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package mutualengine.commands;
+package mutualengine.exceptions;
 
 /**
  *
  * @author auramgold
  */
-public class ArgumentData
+public class MutualEngineIllegalDefinitionError extends Error
 {
-	public Object[] objects;
-	public final boolean errored;
-	
-	public ArgumentData(boolean error, Object... objs)
+
+	/**
+	 * Creates a new instance of <code>IllegalDefinitionError</code> without
+	 * detail message.
+	 */
+	public MutualEngineIllegalDefinitionError()
 	{
-		errored = error;
-		objects = objs;
+	}
+
+	/**
+	 * Constructs an instance of <code>IllegalDefinitionError</code> with the
+	 * specified detail message.
+	 *
+	 * @param msg the detail message.
+	 */
+	public MutualEngineIllegalDefinitionError(String msg)
+	{
+		super(msg);
 	}
 }

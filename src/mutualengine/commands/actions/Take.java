@@ -8,6 +8,7 @@ package mutualengine.commands.actions;
 import java.util.List;
 import mutualengine.MutualEngine;
 import mutualengine.interfaces.Player;
+import mutualengine.commands.ArgumentWrapper;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
 import mutualengine.commands.ArgumentType;
@@ -20,7 +21,8 @@ import mutualengine.interfaces.Item;
  */
 public class Take extends AbstractCommand
 {
-	public static final ArgumentFormat format = new ArgumentFormat(ArgumentType.ITEM);
+	public static final ArgumentFormat format = new ArgumentFormat(
+			new ArgumentWrapper(ArgumentType.ITEM, false));
 
 	public Take(String... aliasList)
 	{

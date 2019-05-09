@@ -16,6 +16,7 @@
  */
 package mutualengine.commands;
 
+import mutualengine.exceptions.MutualEngineIllegalDefinitionError;
 import mutualengine.interfaces.Player;
 
 
@@ -25,14 +26,47 @@ import mutualengine.interfaces.Player;
  */
 public class ArgumentFormat
 {
-	protected ArgumentType[] format;
+	protected ArgumentWrapper[] format;
 	public final int numArgs;
+	public final int numRequiredArgs;
 	
-	public ArgumentFormat(ArgumentType... args)
+	public ArgumentFormat(ArgumentWrapper... args)
 	{
 		numArgs = args.length;
 		format = args;
+		int requiredAccumulator = 0;
 		
+		boolean optionalFound = false;
+		boolean greedyFound = false;
+		for(ArgumentWrapper check: format)
+		{
+			if(check.isOptional())
+			{
+				optionalFound = true;
+			}
+			else
+			{
+				if(optionalFound)
+				{
+					throw new MutualEngineIllegalDefinitionError("A required argument can not be after an optional one.");
+				}
+				++requiredAccumulator;
+			}
+			
+			// Greedy text consumers must be the very last argument
+			
+			if(greedyFound)
+			{
+				throw new MutualEngineIllegalDefinitionError("Greedy text consumers must be the very last argument.");
+			}
+			
+			if(check.getType().getMultiBehavior() == MultipleWordBehavior.GREEDY)
+			{
+				greedyFound = true;
+			}
+		}
+		
+		numRequiredArgs = requiredAccumulator;
 	}
 	
 	public Object parseValid(int index, Player plr, String str)
@@ -43,6 +77,6 @@ public class ArgumentFormat
 	
 	public ArgumentType getTypeAt(int index)
 	{
-		return format[index];
+		return format[index].getType();
 	}
 }

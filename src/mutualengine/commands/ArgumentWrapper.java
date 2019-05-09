@@ -16,18 +16,35 @@
  */
 package mutualengine.commands;
 
+import mutualengine.interfaces.Player;
+
 /**
  *
  * @author auramgold
  */
-public class ArgumentData
+public class ArgumentWrapper
 {
-	public Object[] objects;
-	public final boolean errored;
+	protected ArgumentType type;
+	protected boolean optional;
 	
-	public ArgumentData(boolean error, Object... objs)
+	public ArgumentWrapper(ArgumentType t, boolean o)
 	{
-		errored = error;
-		objects = objs;
+		type = t;
+		optional = o;
+	}
+	
+	public boolean isOptional()
+	{
+		return optional;
+	}
+	
+	public ArgumentType getType()
+	{
+		return type;
+	}
+	
+	public Object parseValid(Player plr, String str)
+	{
+		return type.parseValid(plr, str);
 	}
 }
