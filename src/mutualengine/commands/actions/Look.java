@@ -9,7 +9,6 @@ import java.util.List;
 import mutualengine.MutualEngine;
 import mutualengine.commands.ArgumentData;
 import mutualengine.commands.ArgumentFormat;
-import mutualengine.commands.ArgumentType;
 import mutualengine.interfaces.Area;
 import mutualengine.interfaces.Item;
 import mutualengine.interfaces.Player;
@@ -20,7 +19,7 @@ import mutualengine.interfaces.Player;
  */
 public class Look extends AbstractCommand
 {
-	public static final ArgumentFormat format = new ArgumentFormat((ArgumentType)null);
+	public static final ArgumentFormat format = new ArgumentFormat();
 
 	public Look(String... aliasList)
 	{

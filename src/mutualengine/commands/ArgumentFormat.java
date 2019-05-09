@@ -25,21 +25,14 @@ import mutualengine.interfaces.Player;
  */
 public class ArgumentFormat
 {
-	protected ArgumentType[] format = new ArgumentType[3];
+	protected ArgumentType[] format;
 	public final int numArgs;
 	
 	public ArgumentFormat(ArgumentType... args)
 	{
-		int i = 0;
-		for(; i < args.length && i < 3; ++i)
-		{
-			format[i] = args[i];
-		}
-		numArgs = i;
-		for(;i < 3; ++i)
-		{
-			format[i] = null;
-		}
+		numArgs = args.length;
+		format = args;
+		
 	}
 	
 	public Object parseValid(int index, Player plr, String str)
